@@ -1,7 +1,8 @@
 #include "Book.h"
 #include <stdexcept>
 
-//IMPLEMENTAZIONE ISBN -----------------------------
+// --- IMPLEMENTAZIONE ISBN --- //
+
 Isbn::Isbn(std::string first, std::string second, std::string third, std::string last)
 	: first_ {first}, second_ {second}, third_ {third}, last_{last}
 	{
@@ -39,7 +40,8 @@ bool Isbn::is_valid(void){
 	return true;
 }
 
-//IMPLEMENTAZIONE DATE -----------------------------
+// --- IMPLEMENTAZIONE DATE --- //
+
 Date::Date(int yy, Month mm, int dd, bool ex)
 	: year_{yy}, month_{mm}, day_{dd}, exist_{ex}
 {

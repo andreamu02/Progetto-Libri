@@ -8,6 +8,11 @@ class Isbn{
 	public:
 		Isbn(std::string first, std::string second, std::string third, std::string last);
 		std::string str_ISBN(void);
+		std::string first(void){ return first_;}
+		std::string second(void){ return second_;}
+		std::string third(void){ return third_;}
+		std::string last(void){ return last_;}
+		
 		
 	private:
 		std::string first_;
@@ -17,4 +22,6 @@ class Isbn{
 		bool is_valid(void);
 };
 
+
+std::ostream& operator<<(std::ostream& os, const Isbn& t);
 #endif
