@@ -16,6 +16,7 @@ class Date{
 		int year(void) const {return year_;}
 		Month month(void) const {return month_;}
 		int day(void) const {return day_;}
+		bool exist(void) const {return exist_;}
 		
 	private:
 	int year_;
