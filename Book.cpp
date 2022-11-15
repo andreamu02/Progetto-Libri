@@ -1,6 +1,9 @@
 #include "Book.h"
 #include <stdexcept>
 
+
+// --- IMPLEMENTAZIONE ISBN --- //
+
 Isbn::Isbn(std::string first, std::string second, std::string third, std::string last)
 	: first_ {first}, second_ {second}, third_ {third}, last_{last}
 	{
@@ -38,7 +41,19 @@ bool Isbn::is_valid(void){
 	return true;
 }
 
+std::string Isbn::str_ISBN(void){
+	return t = t.first_ + "-" + t.second_ + "-" + t.third_ + "-" + t-last_;
+}
+
+std::ostream& operator<<(std::ostream& os, const Isbn& t){
+	return os << t.first() << "-" << t.second() << "-" << t.third() << "-" << t.last();
+}
+
+
 //-----------------------------
+
+
+// --- IMPLEMENTAZIONE DATE --- //
 
 Date::Date(int yy, Month mm, int dd, bool ex)
 	: year_{yy}, month_{mm}, day_{dd}, exist_{ex}
