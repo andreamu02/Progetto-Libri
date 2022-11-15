@@ -1,6 +1,7 @@
 #include "Book.h"
 #include <stdexcept>
 
+//IMPLEMENTAZIONE ISBN -----------------------------
 Isbn::Isbn(std::string first, std::string second, std::string third, std::string last)
 	: first_ {first}, second_ {second}, third_ {third}, last_{last}
 	{
@@ -38,8 +39,7 @@ bool Isbn::is_valid(void){
 	return true;
 }
 
-//-----------------------------
-
+//IMPLEMENTAZIONE DATE -----------------------------
 Date::Date(int yy, Month mm, int dd, bool ex)
 	: year_{yy}, month_{mm}, day_{dd}, exist_{ex}
 {
@@ -81,10 +81,34 @@ bool leapyear(int y) {
 std::ostream& operator<<(std::ostream& os, const Date& d)
 {
 	//gestiamo qua questo if o dopo?
+	/* Forse meglio dopo
 	if (!d.exist())
 		return;
-	
+	*/
 	return os << d.day() << '/' << d.month() << '/' << d.year();
 }
 
+//IMPLEMENTAZIONE BOOK -----------------------------
+//costruttori ...
 
+void Book::lent(){
+	checkout_ = true;
+}
+void Book::restituted() {
+	checkout_ = false;
+}
+
+bool operator==(Book a, Book b) {
+	return a.ISBN() == b.ISBN();
+}
+bool operator!=(Book a, Book b) {
+	return !(a == b);
+}
+std::ostream& operator<<(std::ostream& os, Book a) {
+	os << title_ << '\n' <<
+				name << ' ' << surname << '\n' <<
+				ISBN_ << '\n';
+	if (exist_)
+		os << copyright_ << '\n';
+	return os;
+}
