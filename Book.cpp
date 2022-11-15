@@ -1,7 +1,9 @@
 #include "Book.h"
 #include <stdexcept>
 
-//IMPLEMENTAZIONE ISBN -----------------------------
+
+// --- IMPLEMENTAZIONE ISBN --- //
+
 Isbn::Isbn(std::string first, std::string second, std::string third, std::string last)
 	: first_ {first}, second_ {second}, third_ {third}, last_{last}
 	{
@@ -39,7 +41,9 @@ bool Isbn::is_valid(void){
 	return true;
 }
 
-//IMPLEMENTAZIONE DATE -----------------------------
+
+// --- IMPLEMENTAZIONE DATE --- //
+
 Date::Date(int yy, Month mm, int dd, bool ex)
 	: year_{yy}, month_{mm}, day_{dd}, exist_{ex}
 {
@@ -80,7 +84,6 @@ bool leapyear(int y) {
 
 std::ostream& operator<<(std::ostream& os, const Date& d)
 {
-	
 	if (!d.exist())
 		return os << "";
 	return os << d.day() << '/' << d.month() << '/' << d.year();
@@ -92,6 +95,7 @@ std::ostream& operator<<(std::ostream& os, const Date& d)
 Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, int day = DefaultDay, Month month = DefaultMonth, int year = DefaultYear, bool checkout = DefaultCheckout)
 	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {ISBN}, day_ {day}, month_ {month}, year_ {year}, checkout_ {checkout}
 {
+}
 
 void Book::lent(){
 	checkout_ = true;
@@ -102,7 +106,7 @@ void Book::restituted() {
 
 bool Book::exist_date(void){
 	return month_
-
+}
 bool operator==(Book a, Book b) {
 	return a.ISBN() == b.ISBN();
 }
@@ -114,6 +118,9 @@ std::ostream& operator<<(std::ostream& os, Book a) {
 	if(a.valid()){
 		t = t + "\n" + a.day() + " " + a.month() + " " + a.year();
 	}
-	if(a.
-	return os;
+  if(!a.checkout()){
+    t = t + "\nNON ";
+  }
+  t = t + "IN PRESTITO";
+	return os << t;
 }
