@@ -7,7 +7,8 @@
 class Book{
 	public:
 		//costruttore
-		Book(std::string name, std::string surname, std::string title, std::string ISBN, int day = DefaultDay, Month month = DefaultMonth, int year = DefaultYear, bool checkout = DefaultCheckout);
+		Book(std::string name, std::string surname, std::string title, std::string ISBN, bool checkout = DefaultCheckout);
+		Book(std::string name, std::string surname, std::string title, std::string ISBN, int day, Month month, int year, bool checkout = DefaultCheckout);
 	
 		//metodi getter
 		std::string title(void) const { return title_;}
@@ -21,6 +22,7 @@ class Book{
 		void lent();
 		void restituted();
 		bool exist_date();
+		static bool can_be_name(std::string a);
 			
 	private:
 		std::string title_;
@@ -29,10 +31,7 @@ class Book{
 		Isbn ISBN_;
 		Date copyright_;
 		bool checkout_;
-		
-		static constexpr int DefaultDay = 00;
-		static constexpr Month DefaultMonth = Month::def;
-		static constexpr int DefaultYear = 0000;
+	
 		static constexpr bool DefaultCheckout = false;
 };
 
