@@ -92,9 +92,35 @@ std::ostream& operator<<(std::ostream& os, const Date& d)
 //IMPLEMENTAZIONE BOOK -----------------------------
 //costruttori ...
 
-Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, int day = DefaultDay, Month month = DefaultMonth, int year = DefaultYear, bool checkout = DefaultCheckout)
-	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {ISBN}, day_ {day}, month_ {month}, year_ {year}, checkout_ {checkout}
+Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, bool checkout = DefaultCheckout)
+	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {new Isbn(ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1))}, copyright {nullptr}, checkout_ {checkout}
 {
+	if(!can_be_name(name()){
+		cout << "Invalid";
+	}
+	if(!can_be_name(surname()){
+		cout << "Invalid";
+	}
+}
+	   
+Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, int day, Month month, int year, bool checkout = DefaultCheckout)
+	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {new Isbn {ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1)}}, copyright {new Date {day, month, year}}, checkout_ {checkout}
+{
+	if(!can_be_name(name()){
+		cout << "Invalid";
+	}
+	if(!can_be_name(surname()){
+		cout << "Invalid";
+	}
+}
+
+static bool Book::can_be_name(std::string a){
+	for(int i = 0; i<a.length(); i++){
+		if("ABCDEFGHIJKLMNOPQRSTUVWXYZ'- ".find(toupper(a[i])) == std::string::npos){
+			return false;
+		}
+	return true;
+	}
 }
 
 void Book::lent(){
