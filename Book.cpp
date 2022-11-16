@@ -47,27 +47,29 @@ bool Isbn::is_valid(void){
 Date::Date(int yy, Month mm, int dd, bool ex)
 	: year_{yy}, month_{mm}, day_{dd}, exist_{ex}
 {
-	if (!is_date(yy, mm, dd, ex))
+	if (!is_date())
 		throw Invalid{};
 }
 
-bool Date::is_date(int y, Month m, int d, bool ex)
+bool Date::is_date()
 {
 	if (!ex)
 		return true;
-	if (y <= 0 || d <= 0)
+	if (year_ <= 0 || d <= 0)
 		return false;
-	if (m < Month::jan || Month::dec < m)
+	if (month_ < Month::jan || Month::dec < month_)
 		return false;
 	
 	int days_in_month = 31;
 	
-	switch (m) {
+	switch (month_) {
 		case MOnth::feb:
-			days_in_month = (leapyear(y)) ? 29 : 28;
+			days_in_month = (leapyear(year_)) ? 29 : 28;
 			break;
 		case Month::apr: case Month::jun: case Month::sep: case Month::nov: 
 			days_in_month = 30;
+			break;
+		default:
 			break;
 	}	
 	
@@ -75,6 +77,18 @@ bool Date::is_date(int y, Month m, int d, bool ex)
 		return false;
 
 	return true;
+}
+
+static bool Date::leapyear(int y){
+	if(y%400 == 0){
+		return true;
+	}
+	if(y%4 == 0){
+		if(!(y%100 == 0)){
+			return true;
+		}
+	}
+	return false;
 }
 
 //DA IMPLEMENTARE

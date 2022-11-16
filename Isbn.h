@@ -2,6 +2,7 @@
 #define ISBN_H
 
 #include <string>
+#include <ostream>
 
 class Isbn{	
 	public:

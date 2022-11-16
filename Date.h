@@ -15,6 +15,8 @@ class Date{
 		Month month(void) const {return month_;}
 		int day(void) const {return day_;}
 		bool exist(void) const {return exist_;}
+		bool is_date(void);
+		static bool leapyear(int y);
 	
 	private:
 		int year_;
@@ -23,8 +25,7 @@ class Date{
 		bool exist_;		
 };
 
-bool is_date(int y, Month month, int d, bool ex);
-bool leapyear(int y);
+
 
 std::ostream& operator<<(std::ostream& os, const Date& d);
 

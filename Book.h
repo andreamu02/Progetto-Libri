@@ -32,7 +32,7 @@ class Book{
 		Date copyright_;
 		bool checkout_;
 	
-		static constexpr bool DefaultCheckout = false;
+		static const bool DefaultCheckout = false;
 };
 
 bool operator==(Book a, Book b);
