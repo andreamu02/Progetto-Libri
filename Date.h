@@ -2,6 +2,7 @@
 #define DATE_H
 
 #include <ostream>
+#include <string>
 
 enum class Month {
 	def, jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec
@@ -9,7 +10,7 @@ enum class Month {
 
 class Date{
 	public:
-		Date(int y, Month m, int d, bool ex);
+		Date(int y, Month m, int d, bool exist);
 		class Invalid {};
 		int year(void) const {return year_;}
 		Month month(void) const {return month_;}
