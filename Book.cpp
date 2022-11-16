@@ -111,21 +111,21 @@ std::ostream& operator<<(std::ostream& os, const Date& d)
 Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, bool checkout = DefaultCheckout)
 	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {new Isbn(ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1))}, copyright_ {nullptr}, checkout_ {checkout}
 {
-	if(!can_be_name(name()){
+	if(!can_be_name(name())){
 		cout << "Invalid";
 	}
-	if(!can_be_name(surname()){
+	if(!can_be_name(surname())){
 		cout << "Invalid";
 	}
 }
 	   
 Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, int day, Month month, int year, bool checkout = DefaultCheckout)
-	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {new Isbn {ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1)}}, copyright {new Date {day, month, year}}, checkout_ {checkout}
+	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {new Isbn {ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1)}}, copyright_ {new Date {day, month, year}}, checkout_ {checkout}
 {
-	if(!can_be_name(name()){
+	if(!can_be_name(name())){
 		cout << "Invalid";
 	}
-	if(!can_be_name(surname()){
+	if(!can_be_name(surname())){
 		cout << "Invalid";
 	}
 }
@@ -135,8 +135,8 @@ static bool Book::can_be_name(std::string a){
 		if("ABCDEFGHIJKLMNOPQRSTUVWXYZ'- ".find(toupper(a[i])) == std::string::npos){
 			return false;
 		}
-	return true;
 	}
+	return true;
 }
 
 void Book::lent(){
@@ -147,7 +147,7 @@ void Book::restituted() {
 }
 
 bool Book::exist_date(void){
-	return month_
+	return month();
 }
 bool operator==(Book a, Book b) {
 	return a.ISBN() == b.ISBN();
@@ -158,10 +158,11 @@ bool operator!=(Book a, Book b) {
 std::ostream& operator<<(std::ostream& os, Book a) {
 	std::string t = a.title() + "\n" + a.name() + " " + a.surname();
 	if(a.valid()){
-		t = t + "\n" + a.day() + " " + a.month() + " " + a.year();
+		t = t + "\n" + a.copyrigth_();
 	}
-  if(!a.checkout()){
-    t = t + "\nNON ";
+	t = t + "\n";	
+  if(!a.is_checked_out()){
+    t = t + "NON ";
   }
   t = t + "IN PRESTITO";
 	return os << t;
