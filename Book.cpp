@@ -8,7 +8,7 @@ Isbn::Isbn(std::string first, std::string second, std::string third, std::string
 	: first_ {first}, second_ {second}, third_ {third}, last_{last}
 	{
 		if(!is_valid()){
-			throw std::invalid_argument();
+			throw std::invalid_argument("Argomenti errati.\n");
 		}
 	}
 	
@@ -44,8 +44,8 @@ bool Isbn::is_valid(void){
 
 // --- IMPLEMENTAZIONE DATE --- //
 
-Date::Date(int yy, Month mm, int dd, bool ex)
-	: year_{yy}, month_{mm}, day_{dd}, exist_{ex}
+Date::Date(int yy, Month mm, int dd, bool exist)
+	: year_{yy}, month_{mm}, day_{dd}, exist_{exist}
 {
 	if (!is_date())
 		throw Invalid{};
@@ -53,9 +53,9 @@ Date::Date(int yy, Month mm, int dd, bool ex)
 
 bool Date::is_date()
 {
-	if (!ex)
+	if (!exist_)
 		return true;
-	if (year_ <= 0 || d <= 0)
+	if (year_ <= 0 || day_ <= 0)
 		return false;
 	if (month_ < Month::jan || Month::dec < month_)
 		return false;
@@ -63,7 +63,7 @@ bool Date::is_date()
 	int days_in_month = 31;
 	
 	switch (month_) {
-		case MOnth::feb:
+		case Month::feb:
 			days_in_month = (leapyear(year_)) ? 29 : 28;
 			break;
 		case Month::apr: case Month::jun: case Month::sep: case Month::nov: 
@@ -73,7 +73,7 @@ bool Date::is_date()
 			break;
 	}	
 	
-	if (days_in_month < d)
+	if (days_in_month < day_)
 		return false;
 
 	return true;
@@ -98,16 +98,18 @@ bool leapyear(int y) {
 
 std::ostream& operator<<(std::ostream& os, const Date& d)
 {
-	if (!d.exist())
+	if (!d.exist()){
 		return os << "";
-	return os << d.day() << '/' << d.month() << '/' << d.year();
+	}
+
+	return os << d.day() << "/" << d.month() << "/" << d.year();
 }
 
 //IMPLEMENTAZIONE BOOK -----------------------------
 //costruttori ...
 
 Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, bool checkout = DefaultCheckout)
-	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {new Isbn(ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1))}, copyright {nullptr}, checkout_ {checkout}
+	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {new Isbn(ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1))}, copyright_ {nullptr}, checkout_ {checkout}
 {
 	if(!can_be_name(name()){
 		cout << "Invalid";
