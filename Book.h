@@ -1,24 +1,21 @@
 #ifndef BOOK_H
 #define BOOK_H
 
-//#include <string>
-//#include <ostream>
 #include "Date.h"
 #include "Isbn.h"
 
 class Book{
-
 	public:
 		//costruttore
 		Book(std::string name, std::string surname, std::string title, std::string ISBN, int day = DefaultDay, Month month = DefaultMonth, int year = DefaultYear, bool checkout = DefaultCheckout);
 	
-		//metodi setter
-		std::string title(void){ return title_;}
-		std::string name(void){ return name_;}
-		std::string surname(void){ return surname_;}
-		std::string ISBN(void){return ISBN_.str_ISBN(); }
-		Date date(void){return copyright_;}
-		bool is_checked_out(void){return checkout_;}
+		//metodi getter
+		std::string title(void) const { return title_;}
+		std::string name(void) const { return name_;}
+		std::string surname(void) const { return surname_;}
+		std::string ISBN(void) const {return ISBN_.str_ISBN();}
+		Date date(void) const {return copyright_;}
+		bool is_checked_out(void) const {return checkout_;}
 		
 		//metodi per registrare il prestito e la restituzione
 		void lent();
