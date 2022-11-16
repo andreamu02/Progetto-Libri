@@ -20,6 +20,7 @@ class Book{
 		//metodi per registrare il prestito e la restituzione
 		void lent();
 		void restituted();
+		bool exist_date();
 			
 	private:
 		std::string title_;
