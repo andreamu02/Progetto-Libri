@@ -3,9 +3,10 @@
 
 #include <ostream>
 #include <string>
+#include <vector>
 
 enum class Month {
-	def, jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec
+	jan = 1, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec
 };
 
 class Date{
@@ -16,14 +17,19 @@ class Date{
 		Month month(void) const {return month_;}
 		int day(void) const {return day_;}
 		bool exist(void) const {return exist_;}
+		
 		bool is_date(void);
+		
 		static bool leapyear(int y);
-	
+		
+		static std::string int_to_month(Month i);
+		std::vector<std::string> month_print_tbl_ = {"gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"};	
 	private:
 		int year_;
 		Month month_;
 		int day_;
-		bool exist_;		
+		bool exist_;	
+		
 };
 
 
