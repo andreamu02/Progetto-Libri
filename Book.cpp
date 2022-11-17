@@ -136,8 +136,9 @@ Book::Book(std::string name, std::string surname, std::string title, std::string
 }
 
 bool Book::can_be_name(void){
+	std::string temp = "ABCDEFGHIJKLMNOPQRSTUVWXYZ'- ";
 	for(int i = 0; i<name().length(); i++){
-		if("ABCDEFGHIJKLMNOPQRSTUVWXYZ'- ".find(toupper(name()[i])) == std::string::npos){
+		if(temp.find(toupper(name()[i])) == std::string::npos){
 			return false;
 		}
 	}
@@ -145,8 +146,9 @@ bool Book::can_be_name(void){
 }
 
 bool Book::can_be_surname(void){
+	std::string temp = "ABCDEFGHIJKLMNOPQRSTUVWXYZ'- ";
 	for(int i = 0; i<surname().length(); i++){
-		if("ABCDEFGHIJKLMNOPQRSTUVWXYZ'- ".find(toupper(surname()[i])) == std::string::npos){
+		if(temp.find(toupper(surname()[i])) == std::string::npos){
 			return false;
 		}
 	}
