@@ -51,11 +51,13 @@ Date::Date(int yy, Month mm, int dd, bool exist)
 		throw Invalid{};
 }
 
+
 Date::Date(bool exist)
 	: exist_{exist}
 {}
 
 bool Date::is_date()
+
 {
 	if (!exist_)
 		return true;
@@ -95,18 +97,28 @@ bool Date::leapyear(int y){
 	return false;
 }
 
+
 //DA IMPLEMENTARE
 bool leapyear(int y) {
 	return false;
-}
 
-std::ostream& operator<<(std::ostream& os, const Date& d)
-{
+
+
+std::string Date::int_to_month(void) const {
+	if (month()<Month::jan || month()>Month::dec)
+		std::cout << "Invalid";
+	return Date::month_print_tbl_[int(month())];
+
+}
+std::string Date::str_copyright(void) const{
+	return std::to_string(day_) + " " + int_to_month() + " " + std::to_string(year_);
+}
+std::ostream& operator<<(std::ostream& os, const Date& d) {
 	if (!d.exist()){
 		return os << "";
 	}
 
-	return os << d.day() << "/" << d.month() << "/" << d.year();
+	return os << d.str_copyright();
 }
 
 //IMPLEMENTAZIONE BOOK -----------------------------
@@ -162,8 +174,10 @@ bool operator!=(Book a, Book b) {
 }
 std::ostream& operator<<(std::ostream& os, Book a) {
 	std::string t = a.title() + "\n" + a.name() + " " + a.surname();
-	if((a.copyright()).is_date()){
-		t = t + "\n" + std::to_string(a.day()) + " " + std::to_string(a.month()) + " " + std::to_string(a.year());
+
+	if(a.copyright().exist()){
+		t = t + "\n" + a.copyright().str_copyright();
+
 	}
   if(!a.checkout()){
     t = t + "\nNON ";
