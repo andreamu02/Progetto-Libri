@@ -19,21 +19,24 @@ bool Isbn::is_valid(void){
 	int t;
 	try{
 		t = stoi(first_);
-	}catch(std::invalid_argument() ){ return false;}
+	}catch(std::invalid_argument() )
+	{ return false;}
 	
 	if(second_.length()!=3){
 		return false;
 	}
 	try{
 		t = stoi(second_);
-	}catch(std::invalid_argument() ){ return false;}
+	}catch(std::invalid_argument() )
+	{ return false;}
 	
 	if(third_.length()!=3){
 		return false;
 	}
 	try{
 		t = stoi(third_);
-	}catch(std::invalid_argument() ){return false;}
+	}catch(std::invalid_argument() )
+	{return false;}
 	
 	if(last_.length()!=1){
 		return false;
@@ -51,13 +54,7 @@ Date::Date(int yy, Month mm, int dd, bool exist)
 		throw Invalid{};
 }
 
-
-Date::Date(bool exist)
-	: exist_{exist}
-{}
-
-bool Date::is_date()
-
+bool Date::is_date(void)
 {
 	if (!exist_)
 		return true;
@@ -70,7 +67,7 @@ bool Date::is_date()
 	
 	switch (month_) {
 		case Month::feb:
-			days_in_month = (leapyear(year_)) ? 29 : 28;
+			days_in_month = (leapyear()) ? 29 : 28;
 			break;
 		case Month::apr: case Month::jun: case Month::sep: case Month::nov: 
 			days_in_month = 30;
@@ -85,12 +82,12 @@ bool Date::is_date()
 	return true;
 }
 
-bool Date::leapyear(int y){
-	if(y%400 == 0){
+bool Date::leapyear(void){
+	if(year()%400 == 0){
 		return true;
 	}
-	if(y%4 == 0){
-		if(!(y%100 == 0)){
+	if(year()%4 == 0){
+		if(!(year()%100 == 0)){
 			return true;
 		}
 	}
@@ -98,62 +95,62 @@ bool Date::leapyear(int y){
 }
 
 
-//DA IMPLEMENTARE
-bool leapyear(int y) {
-	return false;
-
-
 
 std::string Date::int_to_month(void) const {
 	if (month()<Month::jan || month()>Month::dec)
 		std::cout << "Invalid";
 	return Date::month_print_tbl_[int(month())];
-
 }
 std::string Date::str_copyright(void) const{
 	return std::to_string(day_) + " " + int_to_month() + " " + std::to_string(year_);
 }
 std::ostream& operator<<(std::ostream& os, const Date& d) {
 	if (!d.exist()){
-		return os << "";
+		return os;
 	}
-
 	return os << d.str_copyright();
 }
 
 //IMPLEMENTAZIONE BOOK -----------------------------
-//costruttori ...
 
-Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, bool checkout = DefaultCheckout)
-	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {Isbn(ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1))}, copyright_ {Date{false}}, checkout_ {checkout}
+Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, bool checkout)
+	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1)}, copyright_ {01, Month::jan, 2000, false}, checkout_ {checkout}
 {
-	if(!can_be_name(Book::name())){
+	if(!can_be_name()){
 		std::cout << "Invalid";
 	}
-	if(!can_be_name(Book::surname())){
+	if(!can_be_surname()){
 		std::cout << "Invalid";
 	}
 }
 	   
-Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, int day, Month month, int year, bool checkout = DefaultCheckout)
-	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {Isbn {ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1)}}, copyright_ {Date {day, month, year, true}}, checkout_ {checkout}
+Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, int day, Month month, int year, bool checkout)
+	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1)}, copyright_ {day, month, year, true}, checkout_ {checkout}
 {
-	if(!can_be_name(Book::name())){
+	if(!can_be_name()){
 		std::cout << "Invalid";
 	}
-	if(!can_be_name(Book::surname())){
+	if(!can_be_surname()){
 		std::cout << "Invalid";
 	}
 }
 
-bool Book::can_be_name(std::string a){
-	std::string temp = "ABCDEFGHIJKLMNOPQRSTUVWXYZ'- ";
-	for(int i = 0; i<a.length(); i++){
-		if(temp.find(toupper(a[i])) == std::string::npos){
+bool Book::can_be_name(void){
+	for(int i = 0; i<name().length(); i++){
+		if("ABCDEFGHIJKLMNOPQRSTUVWXYZ'- ".find(toupper(name()[i])) == std::string::npos){
 			return false;
 		}
-	return true;
 	}
+	return true;
+}
+
+bool Book::can_be_surname(void){
+	for(int i = 0; i<surname().length(); i++){
+		if("ABCDEFGHIJKLMNOPQRSTUVWXYZ'- ".find(toupper(surname()[i])) == std::string::npos){
+			return false;
+		}
+	}
+	return true;
 }
 
 void Book::lent(){
@@ -163,9 +160,6 @@ void Book::restituted() {
 	checkout_ = false;
 }
 
-bool Book::exist_date(void){
-	return month_;
-}
 bool operator==(Book a, Book b) {
 	return a.ISBN() == b.ISBN();
 }
@@ -174,13 +168,12 @@ bool operator!=(Book a, Book b) {
 }
 std::ostream& operator<<(std::ostream& os, Book a) {
 	std::string t = a.title() + "\n" + a.name() + " " + a.surname();
-
 	if(a.copyright().exist()){
 		t = t + "\n" + a.copyright().str_copyright();
-
 	}
-  if(!a.checkout()){
-    t = t + "\nNON ";
+	t = t + "\n";
+  if(!a.is_checked_out()){
+    t = t + "NON ";
   }
   t = t + "IN PRESTITO";
 	return os << t;
