@@ -22,7 +22,7 @@ class Date{
 		
 		static bool leapyear(int y);
 		
-		static std::string int_to_month(Month i);
+		std::string int_to_month(void) const;
 		std::vector<std::string> month_print_tbl_ = {"gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"};	
 	private:
 		int year_;
@@ -31,8 +31,6 @@ class Date{
 		bool exist_;	
 		
 };
-
-
 
 std::ostream& operator<<(std::ostream& os, const Date& d);
 
