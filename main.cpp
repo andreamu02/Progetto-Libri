@@ -13,7 +13,8 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
         name = trim(name);
         if(name == ""){
             std::cout << " Nome non valido, reinserire: ";
-    while(name == "");
+        }
+    }while(name == "");
     
   // --- INSERIMENTO COGNOME
     std::cout << " Cognome: ";
@@ -23,7 +24,8 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
         surname = trim(surname);
         if(surname == ""){
             std::cout << " Cognome non valido, reinserire: ";
-    while(surname == "");
+        }
+    }while(surname == "");
     
   // --- INSERIMENTO TITOLO
     std::cout << " Titolo: ";
@@ -33,7 +35,8 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
         title = trim(title);
         if(title == ""){
             std::cout << " Cognome non valido, reinserire: ";
-    while(title == "");
+        }
+    }while(title == "");
     
   // --- INSERIMENTO ISBN
     std::cout << " ISBN (Si può inserire separato da un limitatore come underscore o spazio oppure tutto attaccato: ";
@@ -44,14 +47,15 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
         isbn = validity_ISBN(isbn);
         if(isbn == ""){
             std::cout << " ISBN non valido, reinserire: ";
-    while(isbn == "");
+        }
+    }while(isbn == "");
     
   // --- INSERIMENTO DATA
     bool choice;
     std::cout << " Il libro ha una data di copyright attivo? (y/n): ";
     std::string t = "";
     do{
-        std::in >> t;
+        std::cin >> t;
         if(t != "Y" && t != "y" && t!= "N" && t != "n"){
             t = "";
         }else  if(t == "Y" || t == "y"){
@@ -59,14 +63,14 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
         }else if(t!= "N" || t != "n"){
             choice = false;
         }
-    while(t == "");
+    }while(t == "");
     
     int day, month, year;
     if(choice){
-        cout << " Data di opyright (formato dd mm aaaa): ";
-        cin >> day;
-        cin >> month;
-        cin >> year;
+        std::cout << " Data di opyright (formato dd mm aaaa): ";
+        std::cin >> day;
+        std::cin >> month;
+        std::cin >> year;
     }
     
   // --- PRESTITO
@@ -74,7 +78,7 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
     std::cout << " Il libro \212 in prestito? (y,n) ";
     std::string t = "";
     do{
-        std::in >> t;
+        std::cin >> t;
         if(t != "Y" && t != "y" && t!= "N" && t != "n"){
             t = "";
         }else  if(t == "Y" || t == "y"){
@@ -82,10 +86,10 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
         }else if(t!= "N" || t != "n"){
             checkout = false;
         }
-    while(t == "");
+    }while(t == "");
     
   // --- COSTRUTTORE CLASSE
-    Book::Book book();
+    Book book();
     return 0;
 }
 
@@ -109,13 +113,13 @@ std::string validity_ISBN(std::string a){
 std::string trim(std::string a){
     int i = 0;
     for(i = 0; i<a.length(); i++){
-        if(a[i] != " "){
+        if(a[i] != ' '){
             break;
         }
     }
     std::string t = a.substr(i, a.length());
     for(i = t.length()-1; i>=0; i--){
-        if(t[i] != " "){
+        if(t[i] != ' '){
             break;
         }
     }
