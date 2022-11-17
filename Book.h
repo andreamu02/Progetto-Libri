@@ -16,17 +16,14 @@ class Book{
 		std::string surname(void) const { return surname_;}
 		std::string ISBN(void) {return ISBN_.str_ISBN();}
 		Date copyright(void) const {return copyright_;}
-		bool checkout(void) const {return checkout_;}
-
-		int day(void){return copyright_.day();}
-		Month month(void){return copyright_.month();}
-		int year(void){return copyright_.year();}
+		bool is_checked_out(void) const {return checkout_;}
 		
 		//metodi per registrare il prestito e la restituzione
 		void lent();
 		void restituted();
-		bool exist_date();
-		static bool can_be_name(std::string a);
+
+		bool can_be_name();
+		bool can_be_surname(void);
 			
 	private:
 		std::string title_;
