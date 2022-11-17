@@ -89,7 +89,7 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
     }while(t == "");
     
   // --- COSTRUTTORE CLASSE
-    Book book();
+  // Book book();
     return 0;
 }
 

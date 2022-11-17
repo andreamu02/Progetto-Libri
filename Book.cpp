@@ -44,6 +44,10 @@ bool Isbn::is_valid(void){
 	return true;
 }
 
+std::string Isbn::str_ISBN(void) const{
+	std::string t {first_ + "-" + second_ + "-" + third_ + "-" + last_};
+	return t;
+}
 
 // --- IMPLEMENTAZIONE DATE --- //
 
