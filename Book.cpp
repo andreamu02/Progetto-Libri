@@ -19,24 +19,21 @@ bool Isbn::is_valid(void){
 	int t;
 	try{
 		t = stoi(first_);
-	}catch(std::invalid_argument() )
-	{ return false;}
+	}catch(std::invalid_argument() ){ return false;}
 	
 	if(second_.length()!=3){
 		return false;
 	}
 	try{
 		t = stoi(second_);
-	}catch(std::invalid_argument() )
-	{ return false;}
+	}catch(std::invalid_argument() ){ return false;}
 	
 	if(third_.length()!=3){
 		return false;
 	}
 	try{
 		t = stoi(third_);
-	}catch(std::invalid_argument() )
-	{return false;}
+	}catch(std::invalid_argument() ){return false;}
 	
 	if(last_.length()!=1){
 		return false;
@@ -53,6 +50,10 @@ Date::Date(int yy, Month mm, int dd, bool exist)
 	if (!is_date())
 		throw Invalid{};
 }
+
+Date::Date(bool exist)
+	: exist_{exist}
+{}
 
 bool Date::is_date()
 {
@@ -82,7 +83,7 @@ bool Date::is_date()
 	return true;
 }
 
-static bool Date::leapyear(int y){
+bool Date::leapyear(int y){
 	if(y%400 == 0){
 		return true;
 	}
@@ -94,53 +95,53 @@ static bool Date::leapyear(int y){
 	return false;
 }
 
-std::string Date::int_to_month(void) const
-{
-	if (month()<Month::jan || month()>Month::dec)
-		std::cout << "Invalid";
-	return Date::month_print_tbl_[int(month())];
+//DA IMPLEMENTARE
+bool leapyear(int y) {
+	return false;
 }
 
 std::ostream& operator<<(std::ostream& os, const Date& d)
 {
 	if (!d.exist()){
-		return os;
+		return os << "";
 	}
 
-	return os << d.day() << " " << d.int_to_month() << " " << d.year();
+	return os << d.day() << "/" << d.month() << "/" << d.year();
 }
 
 //IMPLEMENTAZIONE BOOK -----------------------------
+//costruttori ...
 
-Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, bool checkout)
-	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1)}, copyright_ {01, Month::jan, 2000, false}, checkout_ {checkout}
+Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, bool checkout = DefaultCheckout)
+	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {Isbn(ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1))}, copyright_ {Date{false}}, checkout_ {checkout}
 {
-	if(!can_be_name(name)){
+	if(!can_be_name(Book::name())){
 		std::cout << "Invalid";
 	}
-	if(!can_be_name(surname)){
+	if(!can_be_name(Book::surname())){
 		std::cout << "Invalid";
 	}
 }
 	   
-Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, int day, Month month, int year, bool checkout)
-	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1)}, copyright_ {day, month, year, true}, checkout_ {checkout}
+Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, int day, Month month, int year, bool checkout = DefaultCheckout)
+	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {Isbn {ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1)}}, copyright_ {Date {day, month, year, true}}, checkout_ {checkout}
 {
-	if(!can_be_name(name)){
+	if(!can_be_name(Book::name())){
 		std::cout << "Invalid";
 	}
-	if(!can_be_name(surname)){
+	if(!can_be_name(Book::surname())){
 		std::cout << "Invalid";
 	}
 }
 
-static bool Book::can_be_name(std::string a){
+bool Book::can_be_name(std::string a){
+	std::string temp = "ABCDEFGHIJKLMNOPQRSTUVWXYZ'- ";
 	for(int i = 0; i<a.length(); i++){
-		if("ABCDEFGHIJKLMNOPQRSTUVWXYZ'- ".find(toupper(a[i])) == std::string::npos){
+		if(temp.find(toupper(a[i])) == std::string::npos){
 			return false;
 		}
-	}
 	return true;
+	}
 }
 
 void Book::lent(){
@@ -150,6 +151,9 @@ void Book::restituted() {
 	checkout_ = false;
 }
 
+bool Book::exist_date(void){
+	return month_;
+}
 bool operator==(Book a, Book b) {
 	return a.ISBN() == b.ISBN();
 }
@@ -158,12 +162,11 @@ bool operator!=(Book a, Book b) {
 }
 std::ostream& operator<<(std::ostream& os, Book a) {
 	std::string t = a.title() + "\n" + a.name() + " " + a.surname();
-	if(a.copyright().exist()){
-		t = t + "\n" + a.copyright();
+	if((a.copyright()).is_date()){
+		t = t + "\n" + std::to_string(a.day()) + " " + std::to_string(a.month()) + " " + std::to_string(a.year());
 	}
-	t = t + "\n";
-  if(!a.is_checked_out()){
-    t = t + "NON ";
+  if(!a.checkout()){
+    t = t + "\nNON ";
   }
   t = t + "IN PRESTITO";
 	return os << t;
