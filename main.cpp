@@ -76,7 +76,7 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
   // --- PRESTITO
     bool checkout;
     std::cout << " Il libro \212 in prestito? (y,n) ";
-    std::string t = "";
+    t = "";
     do{
         std::cin >> t;
         if(t != "Y" && t != "y" && t!= "N" && t != "n"){
