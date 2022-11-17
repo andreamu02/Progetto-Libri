@@ -94,11 +94,11 @@ static bool Date::leapyear(int y){
 	return false;
 }
 
-static std::string Date::int_to_month(Month i)
+std::string Date::int_to_month(void) const
 {
-	if (i<Month::jan || i>Month::dec)
+	if (month()<Month::jan || month()>Month::dec)
 		std::cout << "Invalid";
-	return month_print_tbl_[int(i)];
+	return Date::month_print_tbl_[int(month())];
 }
 
 std::ostream& operator<<(std::ostream& os, const Date& d)
@@ -107,7 +107,7 @@ std::ostream& operator<<(std::ostream& os, const Date& d)
 		return os;
 	}
 
-	return os << d.day() << " " << Date::int_to_month(d.month()) << " " << d.year();
+	return os << d.day() << " " << d.int_to_month() << " " << d.year();
 }
 
 //IMPLEMENTAZIONE BOOK -----------------------------
