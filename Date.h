@@ -22,6 +22,8 @@ class Date{
 		
 		static bool leapyear(int y);
 		
+		std::string str_copyright(void) const;
+		
 		std::string int_to_month(void) const;
 		std::vector<std::string> month_print_tbl_ = {"gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"};	
 	private:
