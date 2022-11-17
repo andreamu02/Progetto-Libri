@@ -134,7 +134,7 @@ Book::Book(std::string name, std::string surname, std::string title, std::string
 		std::cout << "Invalid";
 	}
 }
-
+	// DIMMI SE FUNZIONA COSI //
 bool Book::can_be_name(void){
 	std::string temp = "ABCDEFGHIJKLMNOPQRSTUVWXYZ'- ";
 	for(int i = 0; i<name().length(); i++){
