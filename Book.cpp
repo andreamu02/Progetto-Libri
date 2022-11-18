@@ -116,20 +116,9 @@ std::ostream& operator<<(std::ostream& os, const Date& d) {
 }
 
 //IMPLEMENTAZIONE BOOK -----------------------------
-
-Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, bool checkout)
-	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1)}, copyright_ {01, Month::jan, 2000, false}, checkout_ {checkout}
-{
-	if(!can_be_name()){
-		std::cout << "Invalid";
-	}
-	if(!can_be_surname()){
-		std::cout << "Invalid";
-	}
-}
 	   
-Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, int day, Month month, int year, bool checkout)
-	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1)}, copyright_ {day, month, year, true}, checkout_ {checkout}
+Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, Date copyright, bool checkout)
+	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1)}, copyright_ {copyright}, checkout_ {checkout}
 {
 	if(!can_be_name()){
 		std::cout << "Invalid";

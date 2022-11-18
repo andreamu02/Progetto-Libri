@@ -7,8 +7,8 @@
 class Book{
 	public:
 		//costruttore
-		Book(std::string name, std::string surname, std::string title, std::string ISBN, bool checkout = DefaultCheckout);
-		Book(std::string name, std::string surname, std::string title, std::string ISBN, int day, Month month, int year, bool checkout = DefaultCheckout);
+	
+		Book(std::string name, std::string surname, std::string title, std::string ISBN, Date copyright, bool checkout = DefaultCheckout);
 	
 		//metodi getter
 		std::string title(void) const { return title_;}
