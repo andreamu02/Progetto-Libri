@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Book.cpp"
+#include <vector>
 
 std::string validity_ISBN(std::string a);
 std::string trim(std::string a);
@@ -31,7 +32,7 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
             help = true;
         }
     }
-    std::vector<Book> books(n);
+    std::vector<Book> books;
     int i = 0;
     while(i<n){
         try{
@@ -40,7 +41,7 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
         }catch(std::invalid_argument){}
     }
     
-    bool end = false;
+    bool end = true;
     while(end){
         try{
             int scelta;
@@ -70,7 +71,7 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
                             }
                         }
                         i = i-1;
-                        books.erase(i);
+                        books.erase(books.begin()+i);
                     }
                     break;
                 case 3: 
@@ -105,7 +106,7 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
                 case 5:
                     break;
                 case 6:
-                    end = true;
+                    end = false;
                     std::cout << " Grazie.\n Terminazione programma.\n";
                     break;
                 default:
@@ -190,8 +191,8 @@ Date get_date(void){
         if(t != "Y" && t != "y" && t!= "N" && t != "n"){
             t = "";
         }else  if(t == "Y" || t == "y"){
-            choice == true;
-        }else if(t!= "N" || t != "n"){
+            choice = true;
+        }else if(t== "N" || t == "n"){
             choice = false;
         }
     }while(t == "");
@@ -215,7 +216,7 @@ Date get_date(void){
 bool checked_out(void){
     bool checkout;
     std::cout << " Il libro \212 in prestito? (y,n) ";
-    t = "";
+    std::string t = "";
     do{
         std::cin >> t;
         if(t != "Y" && t != "y" && t!= "N" && t != "n"){
@@ -248,9 +249,9 @@ std::string validity_ISBN(std::string a){
 // --- FROM INT TO MONTH --- //
 Month int_to_Month(int x){
     if(x<1 || x>12){
-        throw invalid_argument();
+        std::cout << " Invalid\n";
     }
-    Month months[12] {Month::jen, Month::feb, Month::mar, Month::apr, Month::may, Month::jun, Month::jul, Month::aug, Month::sep, Month::oct, Month::nov, Month::dec};
+    Month months[12] {Month::jan, Month::feb, Month::mar, Month::apr, Month::may, Month::jun, Month::jul, Month::aug, Month::sep, Month::oct, Month::nov, Month::dec};
     return months[x];
 }
     
@@ -274,17 +275,18 @@ std::string trim(std::string a){
 }
     
 void print(std::vector<Book>& x){
-    for(int i  = 0; i<x.lenth(); i++){
-        std::cout << " " << (i+1) << " - " << x[i] << std::endl;
+    for(int i  = 0; i<x.size(); i++){
+        std::cout << " " << (i+1) << " - " << x[i].title() << std::endl;
     }
 }
     
 void print_checked(std::vector<Book>& x){
-    for(int i  = 0; i<x.lenth(); i++){
-        if(x.is_checked_out()){
-            std::cout << " " << (i+1) << " - " << x[i] << " in prestito\n";
+    for(int i  = 0; i<x.size(); i++){
+        if(x[i].is_checked_out()){
+            std::cout << " " << (i+1) << " - " << x[i].title() << " in prestito\n";
         }else{
-            std::cout << " " << (i+1) << " - " << x[i] << " non in prestito\n";
+            std::cout << " " << (i+1) << " - " << x[i].title() << " non in prestito\n";
+    	}
     }
 }
     

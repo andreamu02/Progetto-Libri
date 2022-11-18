@@ -3,15 +3,15 @@
 
 #include <ostream>
 #include <string>
-#include <vector>
 
 enum class Month {
-	jan = 1, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec
+	def = 0, jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec
 };
 
 class Date{
 	public:
-		Date(int y, Month m, int d, bool exist);
+		Date(int day, Month month, int year, bool exist);
+		Date(bool exist);
 		class Invalid {};
 		int year(void) const {return year_;}
 		Month month(void) const {return month_;}
@@ -24,8 +24,8 @@ class Date{
 		
 		std::string str_copyright(void) const;
 		
-		std::string int_to_month(void) const;
-		std::vector<std::string> month_print_tbl_ = {"gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"};	
+		std::string month_to_int(void) const;
+			
 	private:
 		int year_;
 		Month month_;
