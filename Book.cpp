@@ -174,7 +174,7 @@ bool operator!=(Book a, Book b) {
 }
 std::ostream& operator<<(std::ostream& os, Book a) {
 	std::string t = a.title() + "\n" + a.name() + " " + a.surname();
-	t = t + "\na.ISBN()";
+	t = t + "\n" + a.ISBN();
 	if(a.copyright().exist()){
 		t = t + "\n" + a.copyright().str_copyright();
 	}
