@@ -21,7 +21,13 @@ class Book{
 		//metodi per registrare il prestito e la restituzione
 		void lent();
 		void restituted();
-
+	
+		void change_name();
+		void change_surname();
+		void change_title();
+		void change_ISBN();
+		void change_date();
+	
 		bool can_be_name();
 		bool can_be_surname(void);
 			
