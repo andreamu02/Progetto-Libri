@@ -51,12 +51,16 @@ std::string Isbn::str_ISBN(void) const{
 
 // --- IMPLEMENTAZIONE DATE --- //
 
-Date::Date(int yy, Month mm, int dd, bool exist)
-	: year_{yy}, month_{mm}, day_{dd}, exist_{exist}
+Date::Date(int day, Month month, int year, bool exist)
+	: day_{day}, month_{month}, year_{year}, exist_{exist}
 {
 	if (!is_date())
 		throw Invalid{};
 }
+
+Date::Date(bool exist)
+	: day_{0}, month_ {Month::def}, year_ {0}, exist_{exist}
+{}
 
 bool Date::is_date(void)
 {
@@ -100,13 +104,13 @@ bool Date::leapyear(void){
 
 
 
-std::string Date::int_to_month(void) const {
+std::string Date::month_to_int(void) const {
 	if (month()<Month::jan || month()>Month::dec)
 		std::cout << "Invalid";
-	return Date::month_print_tbl_[int(month())];
+	return std::to_string(int(month()));
 }
 std::string Date::str_copyright(void) const{
-	return std::to_string(day_) + " " + int_to_month() + " " + std::to_string(year_);
+	return std::to_string(day_) + " " + month_to_int() + " " + std::to_string(year_);
 }
 std::ostream& operator<<(std::ostream& os, const Date& d) {
 	if (!d.exist()){
