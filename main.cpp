@@ -7,9 +7,9 @@ std::string get_name(void);
 std::string get_surname(void);
 std::string get_title(void);
 std::string get_ISBN(void);
-Date::Date get_date(void);
+Date get_date(void);
 bool checked_out(void);
-Date::Month int_to_Month(int x);
+Month int_to_Month(int x);
 void print(std::vector<Book>& x);
 void print_checked(std::vector<Book>& x);
 
@@ -23,7 +23,7 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
         try{
             std::cin >> n;
             help = false;
-        }catch(exception){
+        }catch(std::invalid_argument){
             std::cout << " Dati immessi non corretti, reinserire: ";
             help = true;
         }
@@ -35,9 +35,9 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
     int i = 0;
     while(i<n){
         try{
-            books.push_back(Book {get_name(), get_surname(), get_title(), get_ISBN(), get_date(), is_checked_out()});
+            books.push_back(Book {get_name(), get_surname(), get_title(), get_ISBN(), get_date(), checked_out()});
             i++;
-        }catch(invalid_argument()){}
+        }catch(std::invalid_argument){}
     }
     
     bool end = false;
@@ -48,10 +48,10 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
             std::cin >> scelta;
             switch(scelta){
                 case 1:
-                    books.push_back(Book {get_name(), get_surname(), get_title(), get_ISBN(), get_date(), is_checked_out()});
+                    books.push_back(Book {get_name(), get_surname(), get_title(), get_ISBN(), get_date(), checked_out()});
                     break;
                 case 2:
-                    if(books.length() == 0){
+                    if(books.size() == 0){
                         std::cout << " Impossibile rimuovere un libro. Elenco gia' vuoto.\n";
                     }else{
                         std::cout << " Seleziona il libro che vuoi rimuovere dall'elenco\n";
@@ -60,20 +60,21 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
                         while(i<1){
                             try{
                                 std::cin >> i;
-                             }catch(exception){
+                             }catch(std::invalid_argument){
                                 i = 0;
                                 std::cout << " Dato immesso non valido. Reinserire: ";
                             }
-                            if(i<1 || i>books.length(){
+                            if(i<1 || i>books.size()){
                                 std::cout << " Numero non accettato. Reinserire: ";
                                 i = 0;
                             }
                         }
-                        books.erase(i-1);
+                        i = i-1;
+                        books.erase(i);
                     }
                     break;
                 case 3: 
-                    if(books.length() == 0){
+                    if(books.size() == 0){
                         std::cout << " Elenco vuoto.\n";
                     }else{
                         std::cout << " Seleziona il libro dall'elenco\n";
@@ -82,11 +83,11 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
                         while(i<1){
                             try{
                                 std::cin >> i;
-                             }catch(exception){
+                             }catch(std::invalid_argument){
                                 i = 0;
                                 std::cout << " Dato immesso non valido. Reinserire: ";
                             }
-                            if(i<1 || i>books.length(){
+                            if(i<1 || i>books.size()){
                                 std::cout << " Numero non accettato. Reinserire: ";
                                 i = 0;
                             }
@@ -96,10 +97,10 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
                             books[i].restituted();
                         }else{
                             books[i].lent();
-                    }
+                    	}
+                    }	
                     break;
                 case 4:
-                    
                     break;
                 case 5:
                     break;
@@ -110,15 +111,16 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
                 default:
                     std::cout << " Dato immesso non valido.\n";
                     break;
-    
-        }catch(exception){ std::cout << " Dato immesso non valido.\n";}
+    			}
+        	}catch(std::invalid_argument){ std::cout << " Dato immesso non valido.\n";}
+        }
     return 0;
 }
 
 
 // --- GET NAME --- //
 std::string get_name(void){
-  std:cout << " Name: ";
+  std::cout << " Name: ";
   std::string name = "";
   do{
       std::cin >> name;
@@ -142,6 +144,7 @@ std::string get_surname(void){
           std::cout << " Cognome non valido, reinserire: ";
       }
   }while(surname == "");
+  return surname;
 }
 
 
@@ -172,11 +175,12 @@ std::string get_ISBN(void){
           std::cout << " ISBN non valido, reinserire: ";
       }
     }while(isbn == "");
+    return isbn;
 }
 
 
 // --- GET DATE --- //
-Date::Date get_date(void){
+Date get_date(void){
     bool choice;
     std::cout << " Il libro ha una data di copyright attivo? (y/n): ";
     std::string t = "";
@@ -198,11 +202,12 @@ Date::Date get_date(void){
         std::cin >> day;
         std::cin >> month;
         std::cin >> year;
-        Date x {day, int_to_month(month), year, choice};
+        Date x {day, int_to_Month(month), year, choice};
         return x;
     }else{
         Date x {choice};
         return x;
+   	}
 }
 
  
@@ -241,11 +246,11 @@ std::string validity_ISBN(std::string a){
     
     
 // --- FROM INT TO MONTH --- //
-Date::Month int_to_Month(int x){
+Month int_to_Month(int x){
     if(x<1 || x>12){
         throw invalid_argument();
     }
-    Month months[12] {jen, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec};
+    Month months[12] {Month::jen, Month::feb, Month::mar, Month::apr, Month::may, Month::jun, Month::jul, Month::aug, Month::sep, Month::oct, Month::nov, Month::dec};
     return months[x];
 }
     
@@ -277,9 +282,9 @@ void print(std::vector<Book>& x){
 void print_checked(std::vector<Book>& x){
     for(int i  = 0; i<x.lenth(); i++){
         if(x.is_checked_out()){
-            std::cout << " " << (i+1) << " - " << x[i] << " in prestito\n;
+            std::cout << " " << (i+1) << " - " << x[i] << " in prestito\n";
         }else{
-            std::cout << " " << (i+1) << " - " << x[i] << " non in prestito\n;
+            std::cout << " " << (i+1) << " - " << x[i] << " non in prestito\n";
     }
 }
     

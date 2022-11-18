@@ -7,8 +7,8 @@
 class Book{
 	public:
 		//costruttore
-		Book(std::string name, std::string surname, std::string title, std::string ISBN, bool checkout = DefaultCheckout);
-		Book(std::string name, std::string surname, std::string title, std::string ISBN, int day, Month month, int year, bool checkout = DefaultCheckout);
+	
+		Book(std::string name, std::string surname, std::string title, std::string ISBN, Date copyright, bool checkout = DefaultCheckout);
 	
 		//metodi getter
 		std::string title(void) const { return title_;}
@@ -21,13 +21,7 @@ class Book{
 		//metodi per registrare il prestito e la restituzione
 		void lent();
 		void restituted();
-	
-		void change_name();
-		void change_surname();
-		void change_title();
-		void change_ISBN();
-		void change_date();
-	
+
 		bool can_be_name();
 		bool can_be_surname(void);
 			
