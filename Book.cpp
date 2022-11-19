@@ -1,14 +1,13 @@
 #include "Book.h"
 #include <stdexcept>
 
-
 // --- IMPLEMENTAZIONE ISBN --- //
 
 Isbn::Isbn(std::string first, std::string second, std::string third, std::string last)
 	: first_ {first}, second_ {second}, third_ {third}, last_{last}
 	{
 		if(!is_valid()){
-			throw std::invalid_argument("Argomenti errati.\n");
+			throw Book::Invalid();
 		}
 	}
 	
@@ -55,7 +54,7 @@ Date::Date(int day, Month month, int year, bool exist)
 	: day_{day}, month_{month}, year_{year}, exist_{exist}
 {
 	if (!is_date())
-		throw Invalid{};
+		throw Date::Invalid{};
 }
 
 Date::Date(bool exist)
@@ -106,7 +105,7 @@ bool Date::leapyear(void){
 
 std::string Date::month_to_int(void) const {
 	if (month()<Month::jan || month()>Month::dec)
-		std::cout << "Invalid";
+		throw Invalid();
 	return std::to_string(int(month()));
 }
 std::string Date::str_copyright(void) const{
@@ -125,10 +124,10 @@ Book::Book(std::string name, std::string surname, std::string title, std::string
 	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1)}, copyright_ {copyright}, checkout_ {checkout}
 {
 	if(!can_be_name()){
-		std::cout << "Invalid";
+		throw Invalid();
 	}
 	if(!can_be_surname()){
-		std::cout << "Invalid";
+		throw Invalid();
 	}
 }
 	// DIMMI SE FUNZIONA COSI //
@@ -168,13 +167,16 @@ bool operator!=(Book a, Book b) {
 std::ostream& operator<<(std::ostream& os, Book a) {
 	std::string t = a.title() + "\n" + a.name() + " " + a.surname();
 	t = t + "\n" + a.ISBN();
+	
 	if(a.copyright().exist()){
 		t = t + "\n" + a.copyright().str_copyright();
 	}
+	
 	t = t + "\n";
-  if(!a.is_checked_out()){
-    t = t + "NON ";
-  }
-  t = t + "IN PRESTITO";
+  	if(!a.is_checked_out()){
+    	t = t + "NON ";
+ 	 }
+ 	t = t + "IN PRESTITO";
+ 	
 	return os << t;
 }
