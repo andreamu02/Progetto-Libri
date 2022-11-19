@@ -118,7 +118,7 @@ std::ostream& operator<<(std::ostream& os, const Date& d) {
 	return os << d.str_copyright();
 }
 
-//IMPLEMENTAZIONE BOOK -----------------------------
+// --- IMPLEMENTAZIONE BOOK --- //
 	   
 Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, Date copyright, bool checkout)
 	: name_ {name}, surname_ {surname}, title_ {title}, ISBN_ {ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1)}, copyright_ {copyright}, checkout_ {checkout}
@@ -130,7 +130,7 @@ Book::Book(std::string name, std::string surname, std::string title, std::string
 		throw Invalid();
 	}
 }
-	// DIMMI SE FUNZIONA COSI //
+
 bool Book::can_be_name(void){
 	std::string temp = "ABCDEFGHIJKLMNOPQRSTUVWXYZ'- ";
 	for(int i = 0; i<name().length(); i++){
@@ -156,6 +156,7 @@ void Book::lent(){
 }
 void Book::restituted() {
 	checkout_ = false;
+	return;
 }
 
 bool operator==(Book a, Book b) {
@@ -179,4 +180,25 @@ std::ostream& operator<<(std::ostream& os, Book a) {
  	t = t + "IN PRESTITO";
  	
 	return os << t;
+}
+
+void Book::set_name(std::string name) {
+	name_ = name;
+	return;
+}
+void Book::set_surname(std::string surname) {
+	surname_ = surname;
+	return;
+}
+void Book::set_title(std::string title) {
+	title_ = title;
+	return;
+}
+void Book::set_ISBN(std::string ISBN) {
+	ISBN_ = {ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1)};
+	return;
+}
+void Book::set_copyright(Date copyright) {
+	copyright_ = copyright;
+	return;
 }
