@@ -25,7 +25,6 @@ class Date{
 		std::string str_copyright(void) const;
 		
 		std::string month_to_int(void) const;
-			
 	private:
 		int year_;
 		Month month_;
