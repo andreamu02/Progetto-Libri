@@ -12,6 +12,7 @@ class Isbn{
 		std::string second(void) const { return second_;}
 		std::string third(void) const { return third_;}
 		std::string last(void) const { return last_;}	
+		
 	private:
 		std::string first_;
 		std::string second_;
