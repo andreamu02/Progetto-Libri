@@ -7,7 +7,6 @@
 class Book{
 	public:
 		//costruttore
-	
 		Book(std::string name, std::string surname, std::string title, std::string ISBN, Date copyright, bool checkout = DefaultCheckout);
 	
 		//metodi getter
@@ -24,6 +23,8 @@ class Book{
 
 		bool can_be_name();
 		bool can_be_surname(void);
+		
+		class Invalid {};
 			
 	private:
 		std::string title_;
