@@ -25,6 +25,13 @@ class Book{
 		bool can_be_surname(void);
 		
 		class Invalid {};
+		
+		//metodi setter
+		void set_name(std::string name);
+		void set_surname(std::string surname);
+		void set_title(std::string title);
+		void set_ISBN(std::string ISBN);
+		void set_copyright(Date copyright);
 			
 	private:
 		std::string title_;
