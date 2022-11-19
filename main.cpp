@@ -14,6 +14,7 @@ Month int_to_Month(int x);
 void print(std::vector<Book>& x);
 void print_checked(std::vector<Book>& x);
 void print_copyright(std::vector<Book>& x);
+void print_complete(std::vector<Book>& x);
 
 int main(void){                                 // MANCANZA DI CONTROLLO ERRORI //
     std::cout << " Programma di simulazione biblioteca/prestito libri.\n Per favore, indicare quanti libri si desiderano archiviare: ";
@@ -67,7 +68,9 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
                         int i = 0;
                         while(i<1){
                             try{
-                                std::cin >> i;
+                            	std::string in;
+            					std::cin >> in;
+           	 					i = std::stoi(in);
                              }catch(std::invalid_argument){
                                 i = 0;
                                 std::cout << " Dato immesso non valido. Reinserire: ";
@@ -91,7 +94,9 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
                         int i = 0;
                         while(i<1){
                             try{
-                                std::cin >> i;
+                                std::string in;
+            					std::cin >> in;
+           	 					i = std::stoi(in);
                              }catch(std::invalid_argument){
                                 i = 0;
                                 std::cout << " Dato immesso non valido. Reinserire: ";
@@ -119,7 +124,9 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
                         int i = 0;
                         while(i<1){
                             try{
-                                std::cin >> i;
+                                std::string in;
+            					std::cin >> in;
+           	 					i = std::stoi(in);
                              }catch(std::invalid_argument){
                                 i = 0;
                                 std::cout << " Dato immesso non valido. Reinserire: ";
@@ -130,15 +137,45 @@ int main(void){                                 // MANCANZA DI CONTROLLO ERRORI 
                             }
                         }
                         i--;
+                        Date new_date {false};
                         if (!books[i].copyright().exist()) {
                         	std::cout << " Inserisci una data: ";
+                        	new_date = get_date();
+                        	books[i].set_copyright(new_date);
                         }
                         else {
-                        	
+                        	books[i].set_copyright(new_date);
+                        	std::cout << " Data rimossa";
                         }
                     }
                     break;
                 case 5:
+                	if(books.size() == 0){
+                        std::cout << " Elenco vuoto, impossibile modificare un libro.\n";
+                    }else{
+                    	std::cout << " Seleziona il libro dall'elenco\n";
+                        print_complete(books);
+                        std::cout << "\n -> ";
+                        int i = 0;
+                        while(i<1){
+                            try{
+                                std::string in;
+            					std::cin >> in;
+           	 					i = std::stoi(in);
+                             }catch(std::invalid_argument){
+                                i = 0;
+                                std::cout << " Dato immesso non valido. Reinserire: ";
+                            }
+                            if(i<1 || i>books.size()){
+                                std::cout << " Numero non accettato. Reinserire: ";
+                                i = 0;
+                            }
+                        }
+                        i--;
+                        std::cout << " Cosa vuoi modificare?\n";
+                        std::cout << " 1 - MODIFICA NOME\n 2 - MODIFICA COGNOME\n 3 - MODIFICA TITOLO\n 4 - MODIFICA ISBN\n ->";
+                        // serie di case e break per gestire 
+                    }  
                     break;
                 case 6:
                     end = false;
@@ -215,7 +252,7 @@ std::string get_ISBN(void){
 }
 
 
-// --- GET DATE --- //
+// --- GET DATE --- // controllare che siano numeri e non lettere
 Date get_date(void){
     bool choice;
     std::cout << " Il libro ha una data di copyright attivo? (y/n): ";
@@ -320,11 +357,12 @@ std::string trim(std::string a){
     return t;
 }
   
-// --- FUNZIONI PER STAMPARE LIBRI  
+// --- FUNZIONI PER STAMPARE LIBRI --- //
 void print(std::vector<Book>& x){
     for(int i  = 0; i<x.size(); i++){
         std::cout << " " << (i+1) << " - " << x[i].title() << std::endl;
     }
+    return;
 }
     
 void print_checked(std::vector<Book>& x){
@@ -335,6 +373,7 @@ void print_checked(std::vector<Book>& x){
             std::cout << " " << (i+1) << " - " << x[i].title() << " - non in prestito\n";
     	}
     }
+    return;
 }
 
 void print_copyright(std::vector<Book>& x){
@@ -345,5 +384,12 @@ void print_copyright(std::vector<Book>& x){
             std::cout << " " << (i+1) << " - " << x[i].title() << std::endl;
     	}
     }
+    return;
 }
     
+void print_complete(std::vector<Book>& x) {
+	for(int i  = 0; i<x.size(); i++){
+        std::cout << " " << (i+1) << " - " << x[i].title() << " - " << x[i].name() << " - " << x[i].surname() << " - " << x[i].ISBN() << std::endl;
+    }
+	return;
+}
