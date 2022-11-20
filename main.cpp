@@ -23,12 +23,13 @@ int main(void) {
     bool help = false;
     while(!help) {
         try {
+        	std::cout <<  " Per favore, indicare quanti libri si desiderano archiviare: ";
         	std::string in;
         	std::cin >> in;
             n = std::stoi(in);
             help = true;
         } catch(std::invalid_argument) {
-            std::cout << " Dati immessi non corretti, reinserire: ";
+            std::cout << " Dati immessi non corretti. ";
             help = false;
         }
         if(n<1) {
