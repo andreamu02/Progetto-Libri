@@ -18,18 +18,17 @@ void print_copyright(std::vector<Book>& x);
 void print_complete(std::vector<Book>& x);
 
 int main(void) {                                 
-    std::cout << " Programma di simulazione biblioteca/prestito libri.\n";
+    std::cout << " Programma di simulazione biblioteca/prestito libri.\n Per favore, indicare quanti libri si desiderano archiviare: ";
     int n;
     bool help = false;
     while(!help) {
         try {
-        	std::cout <<  " Per favore, indicare quanti libri si desiderano archiviare: ";
         	std::string in;
         	std::cin >> in;
             n = std::stoi(in);
             help = true;
         } catch(std::invalid_argument) {
-            std::cout << " Dati immessi non corretti. ";
+            std::cout << " Dati immessi non corretti, reinserire: ";
             help = false;
         }
         if(n<1) {
@@ -38,7 +37,6 @@ int main(void) {
     }
     std::vector<Book> books;
     int i = 0;
-    
   	std::cin.ignore(100, '\n');
     while(i<n) {
         try {
@@ -49,13 +47,13 @@ int main(void) {
         }
         catch (Date::invalid_date) {
         	std::cout << " Data immessa non corretta\n";
-
         }
     }
     
     bool end = true;
     while(end) {
         try {
+            std::cin.ignore(100, '\n');
             int scelta;
             std::cout << "\n Scegli l'operazione da fare:\n 1 - AGGIUNGI UN LIBRO\n 2 - RIMUOVI UN LIBRO\n 3 - GESTISCI PRESTITO\n 4 - AGGIUNGI/RIMUOVI COPYRIGHT\n 5 - MODIFICA INFORMAZIONI LIBRO\n 6 - ESCI\n -> ";
             std::string in;
@@ -75,7 +73,6 @@ int main(void) {
                     		std::cout << " Data non valida\n";
                     	}
                     }
-
                     break;
                 case 2:
                     if(books.size() == 0) {
@@ -180,7 +177,7 @@ int main(void) {
                             try {
                                 std::string in;
                                 std::cin >> in;
-           	 					          i = std::stoi(in);
+           	 					i = std::stoi(in);
                              } catch(std::invalid_argument) {
                                 i = 0;
                                 std::cout << " Dato immesso non valido. Reinserire: ";
@@ -193,7 +190,6 @@ int main(void) {
                         i--;
                         std::cout << " Cosa vuoi modificare?\n";
                         std::cout << " 1 - MODIFICA NOME\n 2 - MODIFICA COGNOME\n 3 - MODIFICA TITOLO\n 4 - MODIFICA ISBN\n ->";
-
 						int azione = 0;
 						while(azione<1 || azione >4){
 							try{
@@ -227,15 +223,15 @@ int main(void) {
             					books[i].set_ISBN(get_ISBN());
             					std::cout << " ISBN modificato\n";
             					break;
-            				
+            					
             			}
                     }  
                     break;
                 case 6:
                     end = false;
                     std::cout << " Grazie.\n - - - ELENCO LIBRI - - -\n";
-                    for (int j = 1; j < books.size(); j++) {
-                    	std::cout << "\n - Libro " << j << " - " << std::endl;
+                    for (int j = 0; j < books.size(); j++) {
+                    	std::cout << " - Libro " << i << std::endl;
                     	std::cout << books[j];
                     }
                     std::cout << "\n Terminazione programma.\n";
@@ -348,7 +344,6 @@ Date get_date(bool has_date) {
 				return x;
 			
 			} catch (Date::invalid_date) {
-
 				std::cout << " Data non valida, reinserire: ";
 			}
 		}
@@ -361,10 +356,10 @@ Date get_date(bool has_date) {
 // --- IS CHECKED OUT --- //
 bool checked_out(void) {
     bool checkout;
-    std::cout << " Il libro e' in prestito? (y,n) ";
+    std::cout << " Il libro \212 in prestito? (y,n) ";
     std::string t = "";
     do {
-        std::getline(std::cin, t);
+        std::cin >> t;
         if(t != "Y" && t != "y" && t!= "N" && t != "n") {
             t = "";
         } else  if(t == "Y" || t == "y") {

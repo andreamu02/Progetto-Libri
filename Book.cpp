@@ -8,7 +8,6 @@ Isbn::Isbn(std::string first, std::string second, std::string third, std::string
 	{
 		if(!is_valid()) {
 			throw Isbn::invalid_isbn();
-
 		}
 	}
 	
@@ -67,18 +66,15 @@ Date::Date(int day, Month month, int year, bool exist)
 {
 	if (!is_date())
 		throw Date::invalid_date();
-
 }
 
 Date::Date(bool exist)
 	: day_{0}, month_ {Month::def}, year_ {0}, exist_{exist}
-
 {
 	if(exist_ == true){
 		throw Date::invalid_date();
 	}
 }
-
 
 bool Date::is_date(void) {
 	if (!exist_)
@@ -120,7 +116,6 @@ bool Date::leapyear(void) {
 }
 
 std::string Date::month_to_int(void) const {
-
 	if (month()<Month::jan || month()>Month::dec){
 		throw Date::invalid_date();
 	}
@@ -139,6 +134,9 @@ std::ostream& operator<<(std::ostream& os, const Date& d) {
 }
 
 
+
+
+
 // --- IMPLEMENTAZIONE BOOK --- //
 	   
 Book::Book(std::string name, std::string surname, std::string title, std::string ISBN, Date copyright, bool checkout)
@@ -149,7 +147,6 @@ Book::Book(std::string name, std::string surname, std::string title, std::string
 	}
 	if(!can_be_surname()){
 		throw Book::invalid_arguments();
-
 	}
 }
 
