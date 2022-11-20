@@ -37,6 +37,7 @@ int main(void) {
     }
     std::vector<Book> books;
     int i = 0;
+    
   	std::cin.ignore(100, '\n');
     while(i<n) {
         try {
@@ -47,13 +48,14 @@ int main(void) {
         }
         catch (Date::invalid_date) {
         	std::cout << " Data immessa non corretta\n";
+
         }
     }
     
     bool end = true;
+    std::cin.ignore(100, '\n');
     while(end) {
         try {
-            std::cin.ignore(100, '\n');
             int scelta;
             std::cout << "\n Scegli l'operazione da fare:\n 1 - AGGIUNGI UN LIBRO\n 2 - RIMUOVI UN LIBRO\n 3 - GESTISCI PRESTITO\n 4 - AGGIUNGI/RIMUOVI COPYRIGHT\n 5 - MODIFICA INFORMAZIONI LIBRO\n 6 - ESCI\n -> ";
             std::string in;
@@ -73,6 +75,7 @@ int main(void) {
                     		std::cout << " Data non valida\n";
                     	}
                     }
+
                     break;
                 case 2:
                     if(books.size() == 0) {
@@ -177,7 +180,7 @@ int main(void) {
                             try {
                                 std::string in;
                                 std::cin >> in;
-           	 					i = std::stoi(in);
+           	 					          i = std::stoi(in);
                              } catch(std::invalid_argument) {
                                 i = 0;
                                 std::cout << " Dato immesso non valido. Reinserire: ";
@@ -190,6 +193,7 @@ int main(void) {
                         i--;
                         std::cout << " Cosa vuoi modificare?\n";
                         std::cout << " 1 - MODIFICA NOME\n 2 - MODIFICA COGNOME\n 3 - MODIFICA TITOLO\n 4 - MODIFICA ISBN\n ->";
+
 						int azione = 0;
 						while(azione<1 || azione >4){
 							try{
@@ -223,7 +227,7 @@ int main(void) {
             					books[i].set_ISBN(get_ISBN());
             					std::cout << " ISBN modificato\n";
             					break;
-            					
+            				
             			}
                     }  
                     break;
@@ -344,6 +348,7 @@ Date get_date(bool has_date) {
 				return x;
 			
 			} catch (Date::invalid_date) {
+
 				std::cout << " Data non valida, reinserire: ";
 			}
 		}
