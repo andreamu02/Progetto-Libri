@@ -18,17 +18,18 @@ void print_copyright(std::vector<Book>& x);
 void print_complete(std::vector<Book>& x);
 
 int main(void) {                                 
-    std::cout << " Programma di simulazione biblioteca/prestito libri.\n Per favore, indicare quanti libri si desiderano archiviare: ";
+    std::cout << " Programma di simulazione biblioteca/prestito libri.\n";
     int n;
     bool help = false;
     while(!help) {
         try {
+        	std::cout <<  " Per favore, indicare quanti libri si desiderano archiviare: ";
         	std::string in;
         	std::cin >> in;
             n = std::stoi(in);
             help = true;
         } catch(std::invalid_argument) {
-            std::cout << " Dati immessi non corretti, reinserire: ";
+            std::cout << " Dati immessi non corretti. ";
             help = false;
         }
         if(n<1) {
@@ -53,7 +54,6 @@ int main(void) {
     }
     
     bool end = true;
-    std::cin.ignore(100, '\n');
     while(end) {
         try {
             int scelta;
@@ -234,8 +234,8 @@ int main(void) {
                 case 6:
                     end = false;
                     std::cout << " Grazie.\n - - - ELENCO LIBRI - - -\n";
-                    for (int j = 0; j < books.size(); j++) {
-                    	std::cout << " - Libro " << i << std::endl;
+                    for (int j = 1; j < books.size(); j++) {
+                    	std::cout << "\n - Libro " << j << " - " << std::endl;
                     	std::cout << books[j];
                     }
                     std::cout << "\n Terminazione programma.\n";
@@ -361,10 +361,10 @@ Date get_date(bool has_date) {
 // --- IS CHECKED OUT --- //
 bool checked_out(void) {
     bool checkout;
-    std::cout << " Il libro \212 in prestito? (y,n) ";
+    std::cout << " Il libro e' in prestito? (y,n) ";
     std::string t = "";
     do {
-        std::cin >> t;
+        std::getline(std::cin, t);
         if(t != "Y" && t != "y" && t!= "N" && t != "n") {
             t = "";
         } else  if(t == "Y" || t == "y") {
