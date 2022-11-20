@@ -4,9 +4,11 @@
 #include <string>
 #include <iostream>
 
-class Isbn{	
+class Isbn {	
 	public:
+		// costruttore
 		Isbn(std::string first, std::string second, std::string third, std::string last);
+		// metodi getter
 		std::string str_ISBN(void) const;
 		std::string first(void) const { return first_;}
 		std::string second(void) const { return second_;}
