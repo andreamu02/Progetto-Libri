@@ -6,12 +6,12 @@
 Isbn::Isbn(std::string first, std::string second, std::string third, std::string last)
 	: first_ {first}, second_ {second}, third_ {third}, last_{last}
 	{
-		if(!is_valid()){
+		if(!is_valid()) {
 			throw Book::Invalid();
 		}
 	}
 	
-bool Isbn::is_valid(void){
+bool Isbn::is_valid(void) {
 	if(first_.length()!=3){
 		return false;
 	}
@@ -43,7 +43,7 @@ bool Isbn::is_valid(void){
 	return true;
 }
 
-std::string Isbn::str_ISBN(void) const{
+std::string Isbn::str_ISBN(void) const {
 	std::string t {first_ + "-" + second_ + "-" + third_ + "-" + last_};
 	return t;
 }
@@ -61,8 +61,7 @@ Date::Date(bool exist)
 	: day_{0}, month_ {Month::def}, year_ {0}, exist_{exist}
 {}
 
-bool Date::is_date(void)
-{
+bool Date::is_date(void) {
 	if (!exist_)
 		return true;
 	if (year_ <= 0 || day_ <= 0)
@@ -89,7 +88,7 @@ bool Date::is_date(void)
 	return true;
 }
 
-bool Date::leapyear(void){
+bool Date::leapyear(void) {
 	if(year()%400 == 0){
 		return true;
 	}
@@ -101,16 +100,16 @@ bool Date::leapyear(void){
 	return false;
 }
 
-
-
 std::string Date::month_to_int(void) const {
 	if (month()<Month::jan || month()>Month::dec)
 		throw Invalid();
 	return std::to_string(int(month()));
 }
-std::string Date::str_copyright(void) const{
+
+std::string Date::str_copyright(void) const {
 	return std::to_string(day_) + " " + month_to_int() + " " + std::to_string(year_);
 }
+
 std::ostream& operator<<(std::ostream& os, const Date& d) {
 	if (!d.exist()){
 		return os;
@@ -131,7 +130,7 @@ Book::Book(std::string name, std::string surname, std::string title, std::string
 	}
 }
 
-bool Book::can_be_name(void){
+bool Book::can_be_name(void) {
 	std::string temp = "ABCDEFGHIJKLMNOPQRSTUVWXYZ'- ";
 	for(int i = 0; i<name().length(); i++){
 		if(temp.find(toupper(name()[i])) == std::string::npos){
@@ -141,7 +140,7 @@ bool Book::can_be_name(void){
 	return true;
 }
 
-bool Book::can_be_surname(void){
+bool Book::can_be_surname(void) {
 	std::string temp = "ABCDEFGHIJKLMNOPQRSTUVWXYZ'- ";
 	for(int i = 0; i<surname().length(); i++){
 		if(temp.find(toupper(surname()[i])) == std::string::npos){
@@ -151,9 +150,10 @@ bool Book::can_be_surname(void){
 	return true;
 }
 
-void Book::lent(){
+void Book::lent() {
 	checkout_ = true;
 }
+
 void Book::restituted() {
 	checkout_ = false;
 	return;
@@ -162,9 +162,11 @@ void Book::restituted() {
 bool operator==(Book a, Book b) {
 	return a.ISBN() == b.ISBN();
 }
+
 bool operator!=(Book a, Book b) {
 	return !(a == b);
 }
+
 std::ostream& operator<<(std::ostream& os, Book a) {
 	std::string t = a.title() + "\n" + a.name() + " " + a.surname();
 	t = t + "\n" + a.ISBN();
@@ -186,18 +188,22 @@ void Book::set_name(std::string name) {
 	name_ = name;
 	return;
 }
+
 void Book::set_surname(std::string surname) {
 	surname_ = surname;
 	return;
 }
+
 void Book::set_title(std::string title) {
 	title_ = title;
 	return;
 }
+
 void Book::set_ISBN(std::string ISBN) {
 	ISBN_ = {ISBN.substr(0,3), ISBN.substr(3,3), ISBN.substr(6,3), ISBN.substr(9,1)};
 	return;
 }
+
 void Book::set_copyright(Date copyright) {
 	copyright_ = copyright;
 	return;
