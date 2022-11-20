@@ -13,19 +13,22 @@ class Date {
 		// costruttori
 		Date(int day, Month month, int year, bool exist);
 		Date(bool exist);
-		// classe per la gestione degli errori
-		class Invalid {};
+
 		// metodi getter
 		int year(void) const {return year_;}
 		Month month(void) const {return month_;}
 		int day(void) const {return day_;}
 		bool exist(void) const {return exist_;}
+
 		// metodi ausiliari
 		bool is_date(void);
 		bool leapyear(void);
 		std::string str_copyright(void) const;
 		std::string month_to_int(void) const;
 		
+		// classe per la gestione degli errori
+		class invalid_date{};
+
 	private:
 		int year_;
 		Month month_;

@@ -20,40 +20,42 @@ void print_complete(std::vector<Book>& x);
 int main(void) {                                 
     std::cout << " Programma di simulazione biblioteca/prestito libri.\n Per favore, indicare quanti libri si desiderano archiviare: ";
     int n;
-    bool help = true;
-    while(help) {
+    bool help = false;
+    while(!help) {
         try {
         	std::string in;
-            std::getline(std::cin, in);
+        	std::cin >> in;
             n = std::stoi(in);
-            help = false;
+            help = true;
         } catch(std::invalid_argument) {
             std::cout << " Dati immessi non corretti, reinserire: ";
-            help = true;
+            help = false;
         }
         if(n<1) {
-            help = true;
+            help = false;
         }
     }
     std::vector<Book> books;
     int i = 0;
+    
+  	std::cin.ignore(100, '\n');
     while(i<n) {
         try {
             books.push_back(Book {get_name(), get_surname(), get_title(), get_ISBN(), get_date(has_date()), checked_out()});
             i++;
-        } catch(Book::Invalid e) {
-        	std::cout << "Libro invalid";
+        } catch(Book::invalid_arguments) {
+        	std::cout << " Dati immessi non corretti\n";
         }
-        catch (Date::Invalid e) {
-        	std::cout << "Data non valida";
+        catch (Date::invalid_date) {
+        	std::cout << " Data immessa non corretta\n";
+
         }
     }
     
     bool end = true;
+    std::cin.ignore(100, '\n');
     while(end) {
         try {
-            std::string clean_buffer;
-            std::getline(std::cin, clean_buffer);
             int scelta;
             std::cout << "\n Scegli l'operazione da fare:\n 1 - AGGIUNGI UN LIBRO\n 2 - RIMUOVI UN LIBRO\n 3 - GESTISCI PRESTITO\n 4 - AGGIUNGI/RIMUOVI COPYRIGHT\n 5 - MODIFICA INFORMAZIONI LIBRO\n 6 - ESCI\n -> ";
             std::string in;
@@ -61,7 +63,19 @@ int main(void) {
             scelta = std::stoi(in);
             switch(scelta) {
                 case 1:
-                    books.push_back(Book {get_name(), get_surname(), get_title(), get_ISBN(), get_date(has_date()), checked_out()});
+                    while(true){
+                    	try{
+                    		books.push_back(Book {get_name(), get_surname(), get_title(), get_ISBN(), get_date(has_date()), checked_out()});
+                    		break;
+                    	}catch(Book::invalid_arguments()){
+                    		std::cout << " Dati non validi.\n";
+                    	}catch(Isbn::invalid_isbn()){
+                    		std::cout << " Isbn non valido.\n";
+                    	}catch(Date::invalid_date()){
+                    		std::cout << " Data non valida\n";
+                    	}
+                    }
+
                     break;
                 case 2:
                     if(books.size() == 0) {
@@ -165,8 +179,8 @@ int main(void) {
                         while(i<1) {
                             try {
                                 std::string in;
-            					std::cin >> in;
-           	 					i = std::stoi(in);
+                                std::cin >> in;
+           	 					          i = std::stoi(in);
                              } catch(std::invalid_argument) {
                                 i = 0;
                                 std::cout << " Dato immesso non valido. Reinserire: ";
@@ -179,34 +193,41 @@ int main(void) {
                         i--;
                         std::cout << " Cosa vuoi modificare?\n";
                         std::cout << " 1 - MODIFICA NOME\n 2 - MODIFICA COGNOME\n 3 - MODIFICA TITOLO\n 4 - MODIFICA ISBN\n ->";
-						int azione;
-            			std::getline(std::cin, in);
-            			scelta = std::stoi(in);
+
+						int azione = 0;
+						while(azione<1 || azione >4){
+							try{
+								std::cin >> in;
+		        				azione = std::stoi(in);
+		        			}catch(std::invalid_argument()){
+		        				std::cout << " Numero errato, reinserire: ";
+		        			}
+		        			if(azione<1 || azione > 4){
+		        				std::cout << " Numero errato, reinserire: ";
+		        			}
+		        		}
+		        		std::cin.ignore(100, '\n');
             			switch(azione) {
-            				case 1: {
-            					std::string new_name = get_name();
-            					books[i].set_name(new_name);
-            					std::cout << "Nome modificato\n";
-            				}
+            				case 1: 
+            					books[i].set_name(get_name());
+            					std::cout << " Nome modificato\n";
             					break;
-            				case 2: {
-            					std::string new_surname = get_surname();
-            					books[i].set_surname(new_surname);
-            					std::cout << "Cognome modificato\n";
-            				}           					
+            					
+            				case 2: 
+            					books[i].set_surname(get_surname());
+            					std::cout << " Cognome modificato\n";
             					break;
-            				case 3: {
-            					std::string new_title = get_title();
-            					books[i].set_title(new_title);
-            					std::cout << "Titolo modificato\n";
-            				}           					
+            					
+            				case 3: 
+            					books[i].set_title(get_title());
+            					std::cout << " Titolo modificato\n";
             					break;
-            				case 4: {
-            					std::string new_ISBN = get_ISBN();
-            					books[i].set_ISBN(new_ISBN);
-            					std::cout << "ISBN modificato\n";
-            				}            					
+            					
+            				case 4:
+            					books[i].set_ISBN(get_ISBN());
+            					std::cout << " ISBN modificato\n";
             					break;
+            				
             			}
                     }  
                     break;
@@ -279,13 +300,13 @@ std::string get_ISBN(void) {
     std::cout << " ISBN (Si può inserire separato da un limitatore come underscore o spazio oppure tutto attaccato: ";
     std::string isbn = "";
     do {
-      std::cin >> isbn;
-      isbn = trim(isbn);
-      isbn = validity_ISBN(isbn);
-      if(isbn == "") {
-          std::cout << " ISBN non valido, reinserire: ";
-      }
-    } while(isbn == "");
+    	  std::getline(std::cin, isbn);
+		  isbn = trim(isbn);
+		  isbn = validity_ISBN(isbn);
+		  if(isbn == "") {
+		      std::cout << " ISBN non valido, reinserire: ";
+		  }
+	}while(isbn == "");
     return isbn;
 }
 
@@ -326,7 +347,8 @@ Date get_date(bool has_date) {
 				date_invalid = false;
 				return x;
 			
-			} catch (Book::Invalid e) {
+			} catch (Date::invalid_date) {
+
 				std::cout << " Data non valida, reinserire: ";
 			}
 		}
@@ -373,7 +395,7 @@ std::string validity_ISBN(std::string a) {
 // --- FROM INT TO MONTH --- //
 Month int_to_Month(int x) {
     if(x<1 || x>12){
-        throw Book::Invalid();
+        throw Book::invalid_arguments();
     }
     Month months[12] {Month::jan, Month::feb, Month::mar, Month::apr, Month::may, Month::jun, Month::jul, Month::aug, Month::sep, Month::oct, Month::nov, Month::dec};
     return months[x-1];
