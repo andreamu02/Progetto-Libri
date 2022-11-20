@@ -32,13 +32,6 @@ class Book {
 		void set_title(std::string title);
 		void set_ISBN(std::string ISBN);
 		void set_copyright(Date copyright);
-			
-		//metodi setter
-		void set_name(std::string name);
-		void set_surname(std::string surname);
-		void set_title(std::string title);
-		void set_ISBN(std::string ISBN);
-		void set_copyright(Date copyright);
 		
 		// classe per la gestione errori
 		class invalid_arguments{};	
